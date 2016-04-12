@@ -1,7 +1,10 @@
 {
   "name": "parser",
   "private": true,
-  "dependencies": {},
+  "dependencies": {
+    "vue": "~1.0.21",
+    "vue-resource": "~0.7.0"
+  },
   "devDependencies": {
     "chai": "~3.5.0",
     "mocha": "~2.4.5"
