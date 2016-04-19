@@ -13,6 +13,9 @@
     <!-- bower:css -->
     <!-- endbower -->
     <!-- endbuild -->
+  
+    <!-- Webfont -->
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
 
     <!-- build:css styles/main.css -->
     <link rel="stylesheet" href="styles/main.css">
@@ -24,17 +27,23 @@
       <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
     
-    <form v-on:submit.prevent="search">
-      <input type="text" v-model="query" v-on:keyup="instantSearch">
-      <input type="submit">
-    </form>
-
-    <ul>
-      <li v-for="track in results">
-        <img src="{{ track.albumArt.url }}" alt="{{ track.albumTitle }}">
-        {{ track.song }} &mdash; {{ track.artistName }} ({{ track.albumTitle }})
-      </li>
-    </ul>
+    <main>
+      <form v-on:submit.prevent="search">
+        <input type="text" class="search-box" v-model="query" v-on:keyup="instantSearch" placeholder="Search for tracks, artists...">
+        <button type="submit"></button>
+      </form>
+      
+      <ul>
+        <li v-for="track in results">
+          <img class="album-art--small" v-bind:src="track.albumArt.url" alt="{{ track.albumTitle }}">
+          <div>
+            <h2>{{ track.song }}</h2>
+            <p>{{ track.artistName }}</p>
+            <p>{{ track.albumTitle }}</p>
+          </div>
+        </li>
+      </ul>
+    </main>
     
     <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
     <script>
