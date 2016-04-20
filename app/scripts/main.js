@@ -6,6 +6,12 @@ var delay = (function(){
   };
 })();
 
+Vue.filter('msToSecond', function(millis) {
+	var minutes = Math.floor(millis / 60000);
+	var seconds = ((millis % 60000) / 1000).toFixed(0);
+	return minutes + ":" + (seconds < 10 ? '0' : '') + seconds;
+});
+
 var app = new Vue({
 	el: '#app',
 	data: {
@@ -27,27 +33,30 @@ var app = new Vue({
 			this.showSearchResults = true;
 			this.showAdditionalInfo = false;
 
-			this.$http.get('http://localhost:3000/api/search/' + this.query)
+			this.$http.get('https://api.spotify.com/v1/search?q=' + this.query + '&type=track')
 				.then(function(res) {
-					this.$set('results', res.data);
+					var tracks = res.data.tracks.items.map(function(track) {
+						return { 
+							song: track.name,
+							songId: track.id,
+							artistName: track.artists[0].name,
+							artistId: track.artists[0].id,
+							albumTitle: track.album.name,
+							albumArt: track.album.images[0],
+							previewUrl: track.preview_url,
+							duration: track.duration_ms,
+
+						};
+					});
+
+					this.$set('results', tracks);
 				});
 		},
 		showTrackInfo: function(index) {
 			this.showSearchResults = false;
 			this.showAdditionalInfo = true;
 
-			var track = this.results[index];
-
-			var query = track.song + " " + track.artistName;
-
-			console.log(query);
-
-			this.$http.get('http://localhost:3000/api/lookup/' + track.songId)
-				.then(function(res) {
-					console.log(res);
-					track.itunesLink = res.data[0];
-					this.$set('trackInfo', track);
-				})
+			this.$set('trackInfo', this.results[index]);
 		}
 	}
 });

@@ -91,20 +91,39 @@ ul {
   & .album-art--large {
     width: 200px;
     height: 200px;
+    @media screen and (max-width: 600px) {
+      width: 100%;
+      height: auto;
+    }
   }
 
   & .additional-info__header {
     display: flex;
     padding: 20px;
 
+    @media screen and (max-width: 600px) {
+      flex-direction: column;
+    }
+
     & h2 {
       font-size: $large;
+      margin: 0.8em 0;
+    }
+
+    & p {
       margin: 0.8em 0;
     }
 
     & div {
       width: 100%;
       padding: 0.8em 1.6em;
+      @media screen and (max-width: 600px) {
+        padding: 0;
+      }
+    }
+
+    & audio {
+      width: 100%;
     }
   }
 }
