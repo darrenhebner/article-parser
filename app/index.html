@@ -33,16 +33,27 @@
         <button type="submit"></button>
       </form>
       
-      <ul>
+      <ul v-if="showSearchResults">
         <li v-for="track in results">
           <img class="album-art--small" v-bind:src="track.albumArt.url" alt="{{ track.albumTitle }}">
-          <div>
+          <div v-on:click="showTrackInfo($index)">
             <h2>{{ track.song }}</h2>
             <p>{{ track.artistName }}</p>
             <p>{{ track.albumTitle }}</p>
           </div>
         </li>
       </ul>
+
+      <div class="additional-info" v-show="showAdditionalInfo">
+        <div class="additional-info__header">
+          <img v-bind:src="trackInfo.albumArt.url" alt="{{ trackInfo.albumTitle }}" class="album-art--large">
+          <div>
+            <h2>{{ trackInfo.song }}</h2>
+            <p>by {{ trackInfo.artistName }}</p>
+            <audio controls v-bind:src="trackInfo.previewUrl"></audio>
+          </div>
+        </div>
+      </div>
     </main>
     
     <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
