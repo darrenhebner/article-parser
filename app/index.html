@@ -50,6 +50,7 @@
           <div>
             <h2>{{ trackInfo.song }}</h2>
             <p>by {{ trackInfo.artistName }}</p>
+            <p>{{ trackInfo.duration | msToSecond }}</p>
             <audio controls v-bind:src="trackInfo.previewUrl"></audio>
           </div>
         </div>
